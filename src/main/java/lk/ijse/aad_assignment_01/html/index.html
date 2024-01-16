@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Assignment_11</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="assets/bootstrap-5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/fontawesome-free-6/css/all.min.css">
+
+</head>
+<body>
+
+<nav id="nav" class="navbar navbar-expand-lg">
+    <a class="navbar-brand" href="">
+        <h2>POS System</h2>
+    </a>
+
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav m-auto mb-2 mb-lg-0" >
+            <li class="nav-item active">
+                <a class="nav-link" id="customer-nav">Customer</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="store-nav">Item</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" id="place-order-nav">Place Order</a>
+            </li>
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link" id="OrderHistory-nav">Order History</a>-->
+<!--            </li>-->
+        </ul>
+    </div>
+
+    <div id="currentDateContainer"><span id="currentDate"></span></div>
+</nav>
+
+<!--HomeForm-->
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+        <img src="assets/images/pos.jpg" alt="" >
+        <p>WELCOME <br> TO <br> POINT OF SALE <br> SYSTEM</p>
+    </div>
+</div>
+
+<!--Customer-->
+<div id="customerForm" class="container">
+    <p id="customer">Customer</p>
+    <div class="row">
+        <!--Form-->
+        <div id="CustomerTextField" class="col col-xl-6 col-lg-6 col-md-12 col-sm-12 col12">
+            <form>
+                <div class="mb-3">
+                    <label for="cus_id" class="form-label">Cus_ID</label>
+                    <input type="number" class="form-control" id="cus_id">
+                </div>
+
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name">
+                </div>
+
+                <div class="mb-3">
+                    <label for="nic" class="form-label">NIC</label>
+                    <input type="text" class="form-control" id="nic">
+                </div>
+
+                <div class="form-floating">
+                    <textarea class="form-control" placeholder="Enter your address" id="address" style="height: 100px"></textarea>
+                    <label for="address">Address</label>
+                </div>
+
+
+                <div id="customerbtns" class="mt-4">
+                    <button type="button" class="btn btn-success">Submit</button>
+                    <button type="button" class="btn btn-primary">Update</button>
+                    <button type="button" class="btn btn-danger">Delete</button>
+                    <button type="reset" class="btn btn-warning">Reset</button>
+                </div>
+            </form>
+        </div>
+        <!--Table-->
+        <div class="col col-xl-6 col-lg-6 col-md-12 col-sm-12 col12">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th class="table-heading" scope="col">Cus_ID</th>
+                    <th class="table-heading" scope="col">Name</th>
+                    <th class="table-heading" scope="col">NIC</th>
+                    <th class="table-heading" scope="col">Address</th>
+                </tr>
+                </thead>
+                <tbody class="table-tr" id="customer-tbl-body"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--Item-->
+<div id="storeForm" class="container">
+    <p id="store">Item</p>
+    <div class="row">
+        <!--Form-->
+        <div id="StoreTextField" class="col col-xl-6 col-lg-6 col-md-12 col-sm-12 col12">
+            <form>
+                <div class="mb-3">
+                    <label for="item_id" class="form-label">Item_ID</label>
+                    <input type="number" class="form-control" id="item_id">
+                </div>
+
+                <div class="mb-3">
+                    <label for="item_name" class="form-label">Item_Name</label>
+                    <input type="text" class="form-control" id="item_name">
+                </div>
+
+                <div class="mb-3">
+                    <label for="quantity" class="form-label">Quantity</label>
+                    <input type="text" class="form-control" id="quantity">
+                </div>
+
+                <div class="mb-3">
+                    <label for="price" class="form-label">Price</label>
+                    <input type="text" class="form-control" id="price">
+                </div>
+
+                <div class="form-floating">
+                    <textarea class="form-control" placeholder="Enter Description" id="description" style="height: 100px"></textarea>
+                    <label for="description">Description</label>
+                </div>
+
+                <div id="storebtns" class="mt-4">
+                    <button type="button" class="btn btn-success">Submit</button>
+                    <button type="button" class="btn btn-primary">Update</button>
+                    <button type="button" class="btn btn-danger">Delete</button>
+                    <button type="reset" class="btn btn-warning">Reset</button>
+                </div>
+            </form>
+        </div>
+        <!--Table-->
+        <div class="col col-xl-6 col-lg-6 col-md-12 col-sm-12 col12">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th class="table-heading" scope="col">Item_ID</th>
+                    <th class="table-heading" scope="col">Item_Name</th>
+                    <th class="table-heading" scope="col">Quantity</th>
+                    <th class="table-heading" scope="col">Price</th>
+                    <th class="table-heading" scope="col">Description</th>
+                </tr>
+                </thead>
+                <tbody class="table-tr" id="item-tbl-body"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!--Place Order-->
+<div id="placeOrderForm" class="container">
+    <p id="placeOrder">Place Order</p>
+    <div class="row">
+        <!--Form-->
+        <div id="PlaceOrderTextField" class="col col-xl-6 col-lg-6 col-md-12 col-sm-12 col12">
+            <form>
+                <div id="placeOrderText1">
+                    <div class="mt-lg-2 mb-lg-2 m-lg-3">
+                        <label for="Order_id" class="form-label">Order_ID</label>
+                        <input type="number" class="form-control" id="Order_id">
+                    </div>
+                </div>
+
+                <div id="placeOrderText3" class="mb-lg-2">
+                    <div class="mt-lg-2 mb-lg-2 m-lg-3">
+                        <label for="selectCus_ID" class="form-label">Customer_ID</label>
+                        <select id="selectCus_ID" class="form-select mb-3" aria-label="Default select example"></select>
+                    </div>
+                </div>
+
+                <div id="placeOrderText2">
+                    <div class="m-lg-3">
+                        <label for="select" class="form-label">Select Item ID</label>
+                        <select id="select" class="form-select mb-3" aria-label="Default select example"></select>
+
+                        <div id="ItemNameDiv">
+                            <label for="itemName" class="form-label">  Item Name :</label>
+                            <h5 id="itemName">______________________________</h5>
+                        </div>
+
+                        <div id="ItemQutDiv">
+                            <label for="itemQut" class="form-label">  Hand On Quantity :</label>
+                            <h5 id="itemQut">_____________</h5>
+                        </div>
+
+                        <div id="ItemPriceDiv">
+                            <label for="itemPrice" class="form-label">  Unite Price :</label>
+                            <h5 id="itemPrice">___________</h5>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="quantity" class="form-label">Quantity</label>
+                            <input type="number" class="form-control" id="quantity_placeOrder">
+                        </div>
+
+                        <div id="placeOrderbtns" class="mt-4">
+                            <button type="button" class="btn btn-success">Add</button>
+                            <button id="placeOrderbtnResetbtn" type="reset" class="btn btn-warning">Reset</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--Table-->
+        <div class="col col-xl-6 col-lg-6 col-md-12 col-sm-12 col12">
+            <table id="tblPalceOrder" class="table">
+                <thead>
+                <tr>
+                    <th class="table-heading" scope="col">Item_ID</th>
+                    <th class="table-heading" scope="col">Unite_Price</th>
+                    <th class="table-heading" scope="col">Quantity</th>
+                    <th class="table-heading" scope="col">Total</th>
+                    <th class="table-heading" scope="col">Status</th>
+                </tr>
+                </thead>
+                <tbody class="table-tr" id="placeOrder-tbody"></tbody>
+            </table>
+            <p id="total" class="fs-2">Total :</p>
+            <h2 id="tot">0</h2>
+            <label for="amount"></label>
+            <input id="amount" type="number" class="form-control" placeholder="Amount">
+
+            <div id="placeOrderbtns2" class="mt-4">
+                <button id="place_Order" type="button" class="btn btn-primary">Place Order</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="assets/lib/jquery.min.js"></script>
+<script src="assets/bootstrap-5/js/bootstrap.min.js"></script>
+<script src="assets/fontawesome-free-6/js/all.min.js"></script>
+<script src="assets/js/script.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<script>
+    $("#customerForm").css('display','none');
+    $("#storeForm").css('display','none');
+    $("#placeOrderForm").css('display','none');
+
+
+    $("#customer-nav").on('click',()=>{
+        $("#customerForm").css('display','block');
+        $("#storeForm").css('display','none');
+        $("#placeOrderForm").css('display','none');
+        $("#myTabContent").css('display','none');
+    });
+
+    $("#store-nav").on('click',()=>{
+        $("#customerForm").css('display','none');
+        $("#storeForm").css('display','block');
+        $("#placeOrderForm").css('display','none');
+        $("#myTabContent").css('display','none');
+    });
+
+    $("#place-order-nav").on('click',()=>{
+        $("#customerForm").css('display','none');
+        $("#storeForm").css('display','none');
+        $("#placeOrderForm").css('display','block');
+        $("#myTabContent").css('display','none');
+    });
+
+    $("#customer-nav").on('click',()=>{
+        $("#customer-nav").css('background','white');
+        $("#customer-nav").css('color','black');
+
+        $("#store-nav").css('background','grey');
+        $("#store-nav").css('color','white');
+
+        $("#place-order-nav").css('background','grey');
+        $("#place-order-nav").css('color','white');
+
+        $("#OrderHistory-nav").css('background','grey');
+        $("#OrderHistory-nav").css('color','white');
+    })
+
+    $("#store-nav").on('click',()=>{
+        $("#store-nav").css('background','white');
+        $("#store-nav").css('color','black');
+
+        $("#customer-nav").css('background','grey');
+        $("#customer-nav").css('color','white');
+
+        $("#place-order-nav").css('background','grey');
+        $("#place-order-nav").css('color','white');
+
+        $("#OrderHistory-nav").css('background','grey');
+        $("#OrderHistory-nav").css('color','white');
+    })
+
+    $("#place-order-nav").on('click',()=>{
+        $("#place-order-nav").css('background','white');
+        $("#place-order-nav").css('color','black');
+
+        $("#customer-nav").css('background','grey');
+        $("#customer-nav").css('color','white');
+
+        $("#store-nav").css('background','grey');
+        $("#store-nav").css('color','white');
+
+        $("#OrderHistory-nav").css('background','grey');
+        $("#OrderHistory-nav").css('color','white');
+    })
+
+    $("#OrderHistory-nav").on('click',()=>{
+        $("#OrderHistory-nav").css('background','white');
+        $("#OrderHistory-nav").css('color','black');
+
+        $("#place-order-nav").css('background','grey');
+        $("#place-order-nav").css('color','white');
+
+        $("#customer-nav").css('background','grey');
+        $("#customer-nav").css('color','white');
+
+        $("#store-nav").css('background','grey');
+        $("#store-nav").css('color','white');
+    })
+
+
+    $("#customerbtns>button[type='button']").eq(0).on("click", () => {
+        let cus_id = $("#cus_id").val();
+        let name = $("#name").val();
+        let nic = $("#nic").val();
+        let address = $("#address").val();
+
+        const customer = {
+            cus_id:cus_id,
+            name:name,
+            nic:nic,
+            address:address
+        }
+
+        const custJSON = JSON.stringify(customer);
+
+        const sendAjax = (customerJson) => {
+            $.ajax({
+                url:"http://localhost:8080/AAD_Assignment_01/customer",
+                type:"POST",
+                data:customerJson,
+                contentType:"application/json"
+            })
+        }
+        sendAjax(custJSON);
+    });
+
+</script>
+
+</body>
+</html>
