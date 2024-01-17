@@ -408,7 +408,26 @@
                 url:"http://localhost:8080/AAD_Assignment_01/customer",
                 type:"PUT",
                 data:customerJson,
-                contentType:"application/json"
+                contentType:"application/json",
+
+                success: function (){
+                    loadAllCustomer();
+                    $("#customerbtns>button[type='button']").eq(3).click();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Customer Update Successful',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                },
+
+                error:function (){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Please Check Item Text Filed',
+                        text: 'Something went wrong!'
+                    })
+                }
             })
         }
         sendAjax(custJSON);
@@ -472,7 +491,27 @@
                 url: "http://localhost:8080/AAD_Assignment_01/item",
                 type: "POST",
                 data: itemJSON,
-                contentType: "application/json"
+                contentType: "application/json",
+
+                success: function (){
+                    loadAllCustomer();
+                    $("#storebtns>button[type='button']").eq(3).click();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Item Saved Successful',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                },
+
+                error:function (){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Please Check Item Text Filed',
+                        text: 'Something went wrong!'
+                    })
+                }
+
             })
         }
         sendAjax(itemJSON);
@@ -500,7 +539,26 @@
                 url:"http://localhost:8080/AAD_Assignment_01/item",
                 type:"PUT",
                 data:itemJSON,
-                contentType:"application/json"
+                contentType:"application/json",
+
+                success: function (){
+                    loadAllCustomer();
+                    $("#storebtns>button[type='button']").eq(3).click();
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Item Update Successful',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                },
+
+                error:function (){
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Please Check Item Text Filed',
+                        text: 'Something went wrong!'
+                    })
+                }
             })
         }
         sendAjax(itemJSON);
