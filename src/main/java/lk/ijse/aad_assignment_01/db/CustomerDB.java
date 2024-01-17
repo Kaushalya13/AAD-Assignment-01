@@ -24,4 +24,26 @@ public class CustomerDB {
             throw new RuntimeException(e);
         }
     }
+
+    public static void getAllCustomer(Connection connection) {
+    }
+
+    public boolean updateCustomer(CustomerDTO customerDTO, Connection connection) {
+        try {
+            var preparedStatement = connection.prepareStatement("UPDATE customer set name=?, nic=?, address=? where cus_id=?");
+            preparedStatement.setString(1, customerDTO.getName());
+            preparedStatement.setString(2, customerDTO.getNic());
+            preparedStatement.setString(3, customerDTO.getAddress());
+            preparedStatement.setString(4, customerDTO.getCus_id());
+
+            if (preparedStatement.executeUpdate() != 0) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

@@ -305,6 +305,13 @@
 
     })
 
+
+    // ------------------------------------ customer ----------------------------------------
+
+    loadAllCustomer();
+
+
+    // submit
     $("#customerbtns>button[type='button']").eq(0).on("click", () => {
         let cus_id = $("#cus_id").val();
         let name = $("#name").val();
@@ -332,6 +339,86 @@
     });
 
 
+    function loadAllCustomer(){
+        $("#customer-tbl-body").empty();
+        $.ajax({
+            url:"http://localhost:8080/AAD_Assignment_01/customer",
+            type:"GET",
+
+            success: function (response){
+                for (const customer of response){
+                    let recode = `<tr><td class='customer_id'>${customer.id}</td><td class='name'>${customer.name}</td><td class='nic'>${customer.nic}</td><td class='address'>${customer.address}</td></tr>`
+                    $("#customer-tbl-body").append(recode);
+                }
+            }
+        })
+    }
+
+    //Row Click
+    let index;
+    $("#customer-tbl-body").on("click", "tr", function() {
+        let cus_id = $(this).find(".customer_id").text();
+        let name = $(this).find(".name").text();
+        let nic = $(this).find(".nic").text();
+        let address = $(this).find(".address").text();
+
+        $("#cus_id").val(cus_id);
+        $("#name").val(name);
+        $("#nic").val(nic);
+        $("#address").val(address);
+
+        index=$(this).index();
+    });
+
+    // update
+
+    $("#customerbtns>button[type='button']").eq(1).on("click", () => {
+        let cus_id = $("#cus_id").val();
+        let name = $("#name").val();
+        let nic = $("#nic").val();
+        let address = $("#address").val();
+
+        const customer ={
+            cus_id:cus_id,
+            name:name,
+            nic:nic,
+            address:address
+        }
+
+        const custJSON = JSON.stringify(customer);
+
+        const sendAjax = (customerJson) =>{
+            $.ajax({
+                url:"http://localhost:8080/AAD_Assignment_01/customer",
+                type:"PUT",
+                data:customerJson,
+                contentType:"application/json"
+            })
+        }
+        sendAjax(custJSON);
+    });
+
+
+    // ------------------------------------ item ----------------------------------------
+
+    //Click Row
+
+    $("tbody").on("click", "tr", function() {
+        let item_id = $(this).find(".item_id").text();
+        let item_name = $(this).find(".item_name").text();
+        let quantity = $(this).find(".quantity").text();
+        let price = $(this).find(".price").text();
+
+        $("#item_id").val(item_id);
+        $("#item_name").val(item_name);
+        $("#quantity").val(quantity);
+        $("#price").val(price);
+
+        index=$(this).index();
+    });
+
+    // submit
+
     $("#storebtns>button[type='button']").eq(0).on("click", () => {
         let item_id = $("#item_id").val();
         let item_name = $("#item_name").val();
@@ -353,6 +440,34 @@
                 type: "POST",
                 data: itemJSON,
                 contentType: "application/json"
+            })
+        }
+        sendAjax(itemJSON);
+    });
+
+    //update
+
+    $("#storebtns>button[type='button']").eq(1).on("click", () => {
+        let item_id = $("#item_id").val();
+        let item_name = $("#item_name").val();
+        let qty = $("#qty").val();
+        let price = $("#price").val();
+
+        const item ={
+            item_id:item_id,
+            item_name:item_name,
+            qty:qty,
+            price:price
+        }
+
+        const itemJSON = JSON.stringify(item);
+
+        const sendAjax =(itemJSON) =>{
+            $.ajax({
+                url:"http://localhost:8080/AAD_Assignment_01/item",
+                type:"PUT",
+                data:itemJSON,
+                contentType:"application/json"
             })
         }
         sendAjax(itemJSON);
