@@ -124,10 +124,10 @@
                     <input type="text" class="form-control" id="price">
                 </div>
 
-                <div class="form-floating">
-                    <textarea class="form-control" placeholder="Enter Description" id="description" style="height: 100px"></textarea>
-                    <label for="description">Description</label>
-                </div>
+<!--                <div class="form-floating">-->
+<!--                    <textarea class="form-control" placeholder="Enter Description" id="description" style="height: 100px"></textarea>-->
+<!--                    <label for="description">Description</label>-->
+<!--                </div>-->
 
                 <div id="storebtns" class="mt-4">
                     <button type="button" class="btn btn-success">Submit</button>
@@ -146,7 +146,7 @@
                     <th class="table-heading" scope="col">Item_Name</th>
                     <th class="table-heading" scope="col">Quantity</th>
                     <th class="table-heading" scope="col">Price</th>
-                    <th class="table-heading" scope="col">Description</th>
+<!--                    <th class="table-heading" scope="col">Description</th>-->
                 </tr>
                 </thead>
                 <tbody class="table-tr" id="item-tbl-body"></tbody>
@@ -279,8 +279,6 @@
         $("#place-order-nav").css('background','grey');
         $("#place-order-nav").css('color','white');
 
-        $("#OrderHistory-nav").css('background','grey');
-        $("#OrderHistory-nav").css('color','white');
     })
 
     $("#store-nav").on('click',()=>{
@@ -293,8 +291,6 @@
         $("#place-order-nav").css('background','grey');
         $("#place-order-nav").css('color','white');
 
-        $("#OrderHistory-nav").css('background','grey');
-        $("#OrderHistory-nav").css('color','white');
     })
 
     $("#place-order-nav").on('click',()=>{
@@ -307,24 +303,7 @@
         $("#store-nav").css('background','grey');
         $("#store-nav").css('color','white');
 
-        $("#OrderHistory-nav").css('background','grey');
-        $("#OrderHistory-nav").css('color','white');
     })
-
-    $("#OrderHistory-nav").on('click',()=>{
-        $("#OrderHistory-nav").css('background','white');
-        $("#OrderHistory-nav").css('color','black');
-
-        $("#place-order-nav").css('background','grey');
-        $("#place-order-nav").css('color','white');
-
-        $("#customer-nav").css('background','grey');
-        $("#customer-nav").css('color','white');
-
-        $("#store-nav").css('background','grey');
-        $("#store-nav").css('color','white');
-    })
-
 
     $("#customerbtns>button[type='button']").eq(0).on("click", () => {
         let cus_id = $("#cus_id").val();
@@ -351,6 +330,35 @@
         }
         sendAjax(custJSON);
     });
+
+
+    $("#storebtns>button[type='button']").eq(0).on("click", () => {
+        alert("sdsdsd");
+        // let item_id = $("#item_id").val();
+        // let item_name = $("#item_name").val();
+        // let quantity = $("#quantity").val();
+        // let price = $("#price").val();
+        //
+        // const item = {
+        //     item_id:item_id,
+        //     item_name:item_name,
+        //     quantity:quantity,
+        //     price:price
+        // }
+        //
+        // const itemJSON = JSON.stringify(item);
+        //
+        // const sendAjax = (itemJSON) =>{
+        //     $.ajax({
+        //         url: "http://localhost:8080/AAD_Assignment_01/item",
+        //         type: "POST",
+        //         data: itemJSON,
+        //         contentType: "application/json"
+        //     })
+        // }
+        // sendAjax(itemJSON);
+    });
+
 
 </script>
 

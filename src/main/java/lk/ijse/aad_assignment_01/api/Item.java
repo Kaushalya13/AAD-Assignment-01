@@ -7,8 +7,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import lk.ijse.aad_assignment_01.db.CustomerDB;
-import lk.ijse.aad_assignment_01.dto.CustomerDTO;
+import lk.ijse.aad_assignment_01.db.ItemDB;
+import lk.ijse.aad_assignment_01.dto.ItemDTO;
 
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
@@ -17,9 +17,10 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-@WebServlet(name = "customer",urlPatterns = "/customer")
-public class Customer extends HttpServlet {
+@WebServlet(name = "item",urlPatterns = "/item")
+public class Item extends HttpServlet {
     Connection connection;
+
     @Override
     public void init() throws ServletException {
         try {
@@ -31,21 +32,19 @@ public class Customer extends HttpServlet {
         }
     }
 
-
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Jsonb jsonb = JsonbBuilder.create();
-        CustomerDTO customerDTO = jsonb.fromJson(req.getReader(), CustomerDTO.class);
+        ItemDTO itemDTO = jsonb.fromJson(req.getReader(), ItemDTO.class);
 
-        System.out.println(customerDTO.getCus_id());
-        System.out.println(customerDTO.getName());
-        System.out.println(customerDTO.getNic());
-        System.out.println(customerDTO.getAddress());
+        System.out.println(itemDTO.getItem_id());
+        System.out.println(itemDTO.getItem_name());
+        System.out.println(itemDTO.getQty());
+        System.out.println(itemDTO.getPrice());
 
+        ItemDB itemDB = new ItemDB();
 
-        CustomerDB customerDB = new CustomerDB();
-
-        boolean result = customerDB.saveCustomer(customerDTO, connection);
+        boolean result = itemDB.saveItem(itemDTO, connection);
         if (result) {
             resp.setStatus(HttpServletResponse.SC_OK);
         } else {
