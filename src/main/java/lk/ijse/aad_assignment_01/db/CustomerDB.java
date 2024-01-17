@@ -4,7 +4,10 @@ import lk.ijse.aad_assignment_01.dto.CustomerDTO;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CustomerDB {
 
@@ -25,7 +28,24 @@ public class CustomerDB {
         }
     }
 
-    public static void getAllCustomer(Connection connection) {
+    public static List<CustomerDTO> getAllCustomer(Connection connection) {
+        ArrayList<CustomerDTO> customerDTOS  = new ArrayList<>();
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from customer");
+            ResultSet rst = preparedStatement.executeQuery();
+            while (rst.next()){
+                customerDTOS.add(new CustomerDTO(
+                        rst.getString(1),
+                        rst.getString(2),
+                        rst.getString(3),
+                        rst.getString(4)
+                ));
+            }
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return customerDTOS;
     }
 
     public boolean updateCustomer(CustomerDTO customerDTO, Connection connection) {

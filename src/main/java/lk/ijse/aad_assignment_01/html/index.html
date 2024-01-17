@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Assignment_11</title>
+    <title>POS System</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="assets/bootstrap-5/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/style.css">
@@ -310,7 +310,6 @@
 
     loadAllCustomer();
 
-
     // submit
     $("#customerbtns>button[type='button']").eq(0).on("click", () => {
         let cus_id = $("#cus_id").val();
@@ -337,22 +336,6 @@
         }
         sendAjax(custJSON);
     });
-
-
-    function loadAllCustomer(){
-        $("#customer-tbl-body").empty();
-        $.ajax({
-            url:"http://localhost:8080/AAD_Assignment_01/customer",
-            type:"GET",
-
-            success: function (response){
-                for (const customer of response){
-                    let recode = `<tr><td class='customer_id'>${customer.id}</td><td class='name'>${customer.name}</td><td class='nic'>${customer.nic}</td><td class='address'>${customer.address}</td></tr>`
-                    $("#customer-tbl-body").append(recode);
-                }
-            }
-        })
-    }
 
     //Row Click
     let index;
@@ -399,8 +382,25 @@
     });
 
 
+    function loadAllCustomer(){
+        $("#customer-tbl-body").empty();
+        $.ajax({
+            url:"http://localhost:8080/AAD_Assignment_01/customer",
+            type:"GET",
+
+            success: function (response){
+                for (const customer of response){
+                    let record = `<tr><td class="cus_id">${customer.cus_id}</td><td class="name">${customer.name}</td><td class="nic">${customer.nic}</td><td class="address">${customer.address}</td></tr>`;
+                    $("#customer-tbl-body").append(record);
+                }
+            }
+        })
+    }
+
+
     // ------------------------------------ item ----------------------------------------
 
+    loadAllItem();
     //Click Row
 
     $("tbody").on("click", "tr", function() {
@@ -473,6 +473,20 @@
         sendAjax(itemJSON);
     });
 
+    function loadAllItem(){
+        $("#item-tbl-body").empty();
+        $.ajax({
+            url:"http://localhost:8080/AAD_Assignment_01/item",
+            type:"GET",
+
+            success: function (response){
+                for (const item of response){
+                    let recode = `<tr><td class='item_id'>${item.item_id}</td><td class='item_name'>${item.item_name}</td><td class='qty'>${item.qty}</td><td class='price'>${item.price}</td><td`
+                    $("#item-tbl-body").append(recode);
+                }
+            }
+        })
+    }
 
 </script>
 
