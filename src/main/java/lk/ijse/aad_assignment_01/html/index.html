@@ -115,8 +115,8 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="quantity" class="form-label">Quantity</label>
-                    <input type="text" class="form-control" id="quantity">
+                    <label for="qty" class="form-label">Quantity</label>
+                    <input type="text" class="form-control" id="qty">
                 </div>
 
                 <div class="mb-3">
@@ -197,7 +197,7 @@
                         </div>
 
                         <div class="mb-3">
-                            <label for="quantity" class="form-label">Quantity</label>
+                            <label for="qty" class="form-label">Quantity</label>
                             <input type="number" class="form-control" id="quantity_placeOrder">
                         </div>
 
@@ -333,30 +333,29 @@
 
 
     $("#storebtns>button[type='button']").eq(0).on("click", () => {
-        alert("sdsdsd");
-        // let item_id = $("#item_id").val();
-        // let item_name = $("#item_name").val();
-        // let quantity = $("#quantity").val();
-        // let price = $("#price").val();
-        //
-        // const item = {
-        //     item_id:item_id,
-        //     item_name:item_name,
-        //     quantity:quantity,
-        //     price:price
-        // }
-        //
-        // const itemJSON = JSON.stringify(item);
-        //
-        // const sendAjax = (itemJSON) =>{
-        //     $.ajax({
-        //         url: "http://localhost:8080/AAD_Assignment_01/item",
-        //         type: "POST",
-        //         data: itemJSON,
-        //         contentType: "application/json"
-        //     })
-        // }
-        // sendAjax(itemJSON);
+        let item_id = $("#item_id").val();
+        let item_name = $("#item_name").val();
+        let qty = $("#qty").val();
+        let price = $("#price").val();
+
+        const item = {
+            item_id:item_id,
+            item_name:item_name,
+            qty:qty,
+            price:price
+        }
+
+        const itemJSON = JSON.stringify(item);
+
+        const sendAjax = (itemJSON) =>{
+            $.ajax({
+                url: "http://localhost:8080/AAD_Assignment_01/item",
+                type: "POST",
+                data: itemJSON,
+                contentType: "application/json"
+            })
+        }
+        sendAjax(itemJSON);
     });
 
 
