@@ -1,5 +1,6 @@
 package lk.ijse.aad_assignment_01.api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
 import jakarta.servlet.ServletException;
@@ -7,6 +8,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lk.ijse.aad_assignment_01.db.CustomerDB;
 import lk.ijse.aad_assignment_01.db.ItemDB;
 import lk.ijse.aad_assignment_01.dto.ItemDTO;
 
@@ -16,6 +18,7 @@ import javax.sql.DataSource;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.List;
 
 @WebServlet(name = "item",urlPatterns = "/item")
 public class Item extends HttpServlet {
@@ -30,6 +33,16 @@ public class Item extends HttpServlet {
         } catch (SQLException | NamingException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        List<ItemDTO> allItem = new ItemDB().getAllItem(connection);
+        ObjectMapper objectMapper = new ObjectMapper();
+        String jsonResult = objectMapper.writeValueAsString(allItem);
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+        resp.getWriter().write(jsonResult);
     }
 
     @Override
@@ -52,5 +65,18 @@ public class Item extends HttpServlet {
         }
     }
 
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Jsonb jsonb = JsonbBuilder.create();
+        ItemDTO itemDTO = jsonb.fromJson(req.getReader(), ItemDTO.class);
 
+        ItemDB itemDB = new ItemDB();
+
+        boolean result = itemDB.updateItem(itemDTO, connection);
+        if (result) {
+            resp.setStatus(HttpServletResponse.SC_OK);
+        } else {
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+        }
+    }
 }
