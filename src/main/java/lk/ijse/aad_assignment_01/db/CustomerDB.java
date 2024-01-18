@@ -66,4 +66,21 @@ public class CustomerDB {
             throw new RuntimeException(e);
         }
     }
+
+    public boolean deleteCustomer(String cusId, Connection connection) {
+        try {
+            var preparedStatement = connection.prepareStatement("DELETE from customer WHERE cus_id=?");
+            preparedStatement.setString(1,cusId);
+
+            if (preparedStatement.executeUpdate() != 0) {
+                return true;
+            } else {
+                return false;
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
 }

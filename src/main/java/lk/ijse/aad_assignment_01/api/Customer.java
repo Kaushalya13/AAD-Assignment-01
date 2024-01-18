@@ -79,4 +79,11 @@ public class Customer extends HttpServlet {
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }
+
+    @Override
+    protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if (new CustomerDB().deleteCustomer(req.getParameter("cus_id"),connection)){
+            resp.getWriter().write("Customer Delete");
+        }
+    }
 }
