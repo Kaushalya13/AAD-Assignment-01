@@ -165,13 +165,13 @@
                 <div id="placeOrderText1">
                     <div class="mt-lg-2 mb-lg-2 m-lg-3">
                         <label for="Order_id" class="form-label">Order_ID</label>
-                        <input type="number" class="form-control" id="Order_id">
+                        <h4 id="Order_id">O001</h4>
                     </div>
                 </div>
 
                 <div id="placeOrderText3" class="mb-lg-2">
                     <div class="mt-lg-2 mb-lg-2 m-lg-3">
-                        <label for="selectCus_ID" class="form-label">Customer_ID</label>
+                        <label for="selectCus_ID" class="form-label">Customer_Name</label>
                         <select id="selectCus_ID" class="form-select mb-3" aria-label="Default select example"></select>
                     </div>
                 </div>
@@ -223,8 +223,10 @@
                 </thead>
                 <tbody class="table-tr" id="placeOrder-tbody"></tbody>
             </table>
+
             <p id="total" class="fs-2">Total :</p>
             <h2 id="tot">0</h2>
+
             <label for="amount"></label>
             <input id="amount" type="number" class="form-control" placeholder="Amount">
 
@@ -649,6 +651,238 @@
             }
         })
     }
+
+    // ------------------------------------ place order ----------------------------------------
+
+    // generate Order_id
+
+    var orderCount;
+    var lastOrder;
+    var allItem;
+
+
+    function generateOrderId(){
+        if (orderCount === 0){
+            $('#Order_id').text("O001");
+        }else {
+            const lastID = lastOrder.order_id.split("O");
+            const lastNumber = parseInt(lastID[1], 10);
+            const newNumber = lastNumber + 1;
+            const newID = "O" + newNumber.toString().padStart(3, '0');
+            $('#Order_id').text(newID);
+            console.log(newID);
+        }
+    }
+
+
+    //Combo Box Row Click
+    $(document).ready(function() {
+        $('#select').change(function(){
+            var selectedOption = $(this).find('option:selected');
+            let item_id = selectedOption.val();
+
+            for (const item of allItem){
+                if (item_id===item.item_id){
+                    $('#itemName').text(item.item_name);
+                    $('#itemQut').text(item.qty);
+                    $('#itemPrice').text(item.price);
+                }
+            }
+            $('#quantity_placeOrder').focus();
+        });
+    });
+
+
+    document.getElementById("select").addEventListener("change", function() {
+        if($('#select').val() === "Select Item ID"){
+            $('#itemName').text("______________________________");
+            $('#itemQut').text("_____________");
+            $('#itemPrice').text("___________");
+        }
+    });
+
+
+    //Add Button
+    $("#placeOrderbtns>button[type='button']").eq(0).on("click", () => {
+        let item_id = $("#select").val();
+        let qty;
+        let unit_price ;
+        let total;
+
+        var itemElement;
+
+        for (const item of allItem){
+            if (item_id===item.item_id){
+                itemElement = item;
+                qty = parseInt($("#quantity_placeOrder").val());
+                unit_price = parseFloat(item.price);
+                total = qty * unit_price;
+            }
+        }
+        let existingRow = $(`#placeOrder-tbody tr[data-item-id="${item_id}"]`);
+
+        if (existingRow.length) {
+            let existingQuantity = parseInt(existingRow.find('.quantity').text());
+            let newQuantity = existingQuantity + qty;
+            let newTotal = newQuantity * unit_price;
+
+            if (itemElement && newQuantity <= itemElement.qty) {
+                existingRow.find('.quantity').text(newQuantity);
+                existingRow.find('.price').text(newTotal);
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'The quantity is not enough!',
+                    text: 'Something went wrong!'
+                });
+            }
+        } else {
+            if (itemElement && itemElement.qty >= qty) {
+                let record = `
+        <tr data-item-id="${item_id}">
+            <td class="item_id">${item_id}</td>
+            <td class="item_price">${unit_price}</td>
+            <td class="quantity">${qty}</td>
+            <td class="price">${total}</td>
+            <td class="button">
+                <button class="removeButton" type="button">
+                    <i class="fa-solid fa-trash"></i>
+                </button>
+            </td>
+        </tr>`;
+
+                $("#placeOrder-tbody").append(record);
+            } else {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'The quantity is not enough!',
+                    text: 'Something went wrong!'
+                });
+            }
+        }
+
+        let netTot = 0;
+        $("#placeOrder-tbody tr").each(function() {
+            netTot += parseFloat($(this).find('.price').text());
+        });
+
+        $("#tot").text(netTot);
+
+        $(".removeButton").on("click", function() {
+            $(this).closest('tr').remove();
+
+            let newNetTot = 0;
+            $("#placeOrder-tbody tr").each(function() {
+                newNetTot += parseFloat($(this).find('.price').text());
+            });
+
+            $("#tot").text(newNetTot);
+        });
+
+        $('#itemName').text("______________________________");
+        $('#itemQut').text("_____________");
+        $('#itemPrice').text("___________");
+    });
+
+    ("#placeOrderbtnResetbtn").eq(0).on("click", () => {
+        $('#itemName').text("______________________________");
+        $('#itemQut').text("_____________");
+        $('#itemPrice').text("___________");
+        $('#placeOrder-tbody>tr').remove();
+    });
+
+    //PlaceOrder Button
+    $("#place_Order").on("click", () => {
+        let amount = parseFloat($('#amount').val());
+        let net_total = parseFloat($('#tot').text());
+        let date = $('#currentDate').text();
+        let order_id = $('#Order_id').text();
+
+        var selectOption = $('#selectCus_ID').find('option:selected');
+        let cus_name = selectOption.val()
+
+        $("#placeOrder-tbody tr").each(function() {
+            let quantity = parseFloat($(this).find('.quantity').text());
+            let item_id = $(this).find('.item_id').text();
+
+            console.log(item_id,quantity);
+
+            const item = {
+                item_id:item_id,
+                quantity:quantity
+            };
+
+
+            const itemJSON = JSON.stringify(item);
+
+            const sendAjax = (itemJSON) =>{
+                $.ajax({
+                    url: "http://localhost:8080/Assignment/order",
+                    type: "PUT",
+                    data: itemJSON,
+                    contentType: "application/json",
+
+                    success:function (){
+                        loadAllItem();
+                    }
+                });
+            }
+
+            sendAjax(itemJSON);
+        });
+
+
+        const order = {
+            date:date,
+            order_id:order_id,
+            cus_name:cus_name,
+            net_total:net_total
+        };
+
+        const order_JSON = JSON.stringify(order);
+        console.log(order_JSON)
+
+
+        if (amount >= net_total){
+            let cash = amount - net_total;
+            const sendAjax = (orderJSON) => {
+                $.ajax({
+                    url: "http://localhost:8080/Assignment/order",
+                    type: "POST",
+                    data: orderJSON,
+                    contentType: "application/json",
+
+                    success:function (){
+                        $('#amount').val("");
+                        $('#tot').text(0);
+                        $('#placeOrderbtnResetbtn').click();
+
+                        /*$("#storebtns>button[type='button']").eq(3).click();*/
+                        Swal.fire({
+                            icon: 'success',
+                            title: `Order Successful! \n Cash: ${cash.toFixed(2)}`,
+                            showConfirmButton: true
+                        });
+                    },
+                    error: function () {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Please Check Text Field',
+                            text: 'Something went wrong!'
+                        })
+                    }
+                });
+            }
+            sendAjax(order_JSON);
+        }else {
+            Swal.fire({
+                icon: 'error',
+                title: 'The amount is not enough!',
+                text: 'Something went wrong!'
+            });
+        }
+    });
+
 
 </script>
 

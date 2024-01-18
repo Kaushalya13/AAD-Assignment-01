@@ -81,4 +81,21 @@ public class ItemDB {
         }
         return false;
     }
+
+    public boolean updateItemQty(ItemDTO itemDTO, Connection connection) {
+        try {
+            var ps = connection.prepareStatement("UPDATE item set qty = qty - ? where item_id = ?");
+            ps.setInt(1, itemDTO.getQty());
+            ps.setString(2, itemDTO.getItem_id());
+
+            if (ps.executeUpdate() != 0) {
+                return true;
+            } else {
+                return false;
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
