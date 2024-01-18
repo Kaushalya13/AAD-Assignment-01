@@ -64,4 +64,21 @@ public class ItemDB {
             throw new RuntimeException(e);
         }
     }
+
+    public boolean deleteItem(String itemId, Connection connection) {
+        try {
+            var preparedStatement = connection.prepareStatement("DELETE from item WHERE item_id=?");
+            preparedStatement.setString(1,itemId);
+
+            if (preparedStatement.executeUpdate() != 0) {
+                return true;
+            } else {
+                return false;
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return false;
+    }
 }
