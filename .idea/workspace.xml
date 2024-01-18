@@ -10,8 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="3947bc35-3f05-48db-84d6-0dd60128ce64" name="Changes" comment="Updating">
-      <change afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/aad_assignment_01/html/login.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/lk/ijse/aad_assignment_01/html/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/lk/ijse/aad_assignment_01/html/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +35,9 @@
     <option name="FILTER_INFO" value="true" />
     <option name="FILTER_DEBUG" value="true" />
     <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
   </component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
@@ -167,7 +170,7 @@
       <workItem from="1705465311514" duration="18852000" />
       <workItem from="1705508751757" duration="7203000" />
       <workItem from="1705549633964" duration="20585000" />
-      <workItem from="1705595597671" duration="3077000" />
+      <workItem from="1705595597671" duration="4658000" />
     </task>
     <task id="LOCAL-00001" summary="Updating">
       <created>1705391326865</created>
@@ -295,7 +298,21 @@
       <option name="project" value="LOCAL" />
       <updated>1705596439564</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="Updating">
+      <created>1705598771086</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1705598771086</updated>
+    </task>
+    <task id="LOCAL-00020" summary="Updating">
+      <created>1705598829875</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1705598829875</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
