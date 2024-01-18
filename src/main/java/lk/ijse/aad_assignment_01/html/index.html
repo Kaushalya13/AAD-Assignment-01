@@ -668,6 +668,8 @@
                 }
 
                 for (const item of response){
+                    allItem = response;
+
                     let recode = `<option class="options">${item.item_id}</option>`
                     $("#select").append(recode);
                 }
