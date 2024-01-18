@@ -171,7 +171,7 @@
 
                 <div id="placeOrderText3" class="mb-lg-2">
                     <div class="mt-lg-2 mb-lg-2 m-lg-3">
-                        <label for="selectCus_ID" class="form-label">Customer_Name</label>
+                        <label for="selectCus_ID" class="form-label">Customer_ID</label>
                         <select id="selectCus_ID" class="form-select mb-3" aria-label="Default select example"></select>
                     </div>
                 </div>
@@ -203,7 +203,7 @@
 
                         <div id="placeOrderbtns" class="mt-4">
                             <button type="button" class="btn btn-success">Add</button>
-                            <button id="placeOrderbtnResetbtn" type="reset" class="btn btn-warning">Reset</button>
+                            <button id="placeOrderResetbtn" type="button" class="btn btn-warning">Reset</button>
                         </div>
                     </div>
                 </div>
@@ -325,8 +325,11 @@
 
     // ------------------------------------ customer ----------------------------------------
 
+    var allItem;
+    var allCustomer;
     //Row Click
     let index;
+
     $("#customer-tbl-body").on("click", "tr", function() {
         let cus_id = $(this).find(".cus_id").text();
         let name = $(this).find(".name").text();
@@ -443,9 +446,19 @@
             type:"GET",
 
             success: function (response){
+                $("#selectCus_ID").empty();
+
+                let recode = `<option class="options">Select Customer ID</option>`
+                $("#selectCus_ID").append(recode);
+
                 for (const customer of response){
                     let record = `<tr><td class="cus_id">${customer.cus_id}</td><td class="name">${customer.name}</td><td class="nic">${customer.nic}</td><td class="address">${customer.address}</td></tr>`;
                     $("#customer-tbl-body").append(record);
+                }
+
+                for (const customer of response){
+                    let recode = `<option class="options">${customer.cus_id}</option>`
+                    $("#selectCus_ID").append(recode);
                 }
             }
         })
@@ -644,9 +657,19 @@
             type:"GET",
 
             success: function (response){
+                $("#select").empty();
+
+                let recode = `<option class="options">Select Item ID</option>`
+                $("#select").append(recode);
+
                 for (const item of response){
                     let recode = `<tr><td class='item_id'>${item.item_id}</td><td class='item_name'>${item.item_name}</td><td class='qty'>${item.qty}</td><td class='price'>${item.price}</td><td`
                     $("#item-tbl-body").append(recode);
+                }
+
+                for (const item of response){
+                    let recode = `<option class="options">${item.item_id}</option>`
+                    $("#select").append(recode);
                 }
             }
         })
@@ -654,13 +677,18 @@
 
     // ------------------------------------ place order ----------------------------------------
 
-    // generate Order_id
 
     var orderCount;
     var lastOrder;
-    var allItem;
 
 
+    $("#placeOrderbtns>button[type='button']").eq(1).on("click", () => {
+        // alert("fs")
+        $("#select").val("");
+        $("#selectCus_ID").val("");
+    });
+
+    // generate Order_id
     function generateOrderId(){
         if (orderCount === 0){
             $('#Order_id').text("O001");
@@ -675,7 +703,22 @@
     }
 
 
-    //Combo Box Row Click
+    //Combo Box load customer
+    $(document).ready(function() {
+        $('#selectCus_ID').change(function(){
+            var selectedOption = $(this).find('option:selected');
+            let cus_id = selectedOption.val();
+
+            for (const customer of allCustomer){
+                if (cus_id===customer.cus_id){
+                    $('#cus_id').text(customer.cus_id);
+                }
+            }
+        });
+    });
+
+
+    //Combo Box load item
     $(document).ready(function() {
         $('#select').change(function(){
             var selectedOption = $(this).find('option:selected');
@@ -759,6 +802,7 @@
                     text: 'Something went wrong!'
                 });
             }
+
         }
 
         let netTot = 0;
@@ -784,7 +828,7 @@
         $('#itemPrice').text("___________");
     });
 
-    ("#placeOrderbtnResetbtn").eq(0).on("click", () => {
+    ("#placeOrderResetbtn").eq(1).on("click", () => {
         $('#itemName').text("______________________________");
         $('#itemQut').text("_____________");
         $('#itemPrice').text("___________");
@@ -853,6 +897,7 @@
                     contentType: "application/json",
 
                     success:function (){
+                        generateOrderId();
                         $('#amount').val("");
                         $('#tot').text(0);
                         $('#placeOrderbtnResetbtn').click();
